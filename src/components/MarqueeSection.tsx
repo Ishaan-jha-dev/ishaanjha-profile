@@ -1,7 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-import React, { useRef, useEffect, useState } from 'react';
-
 const skills = [
   {
     name: 'Product Building',
