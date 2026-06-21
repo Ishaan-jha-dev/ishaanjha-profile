@@ -1,35 +1,54 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-const GIFS_ROW1 = [
-  'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
-  'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
-  'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
-  'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
-  'https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif',
-  'https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif',
-  'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
-  'https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif',
-  'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
-  'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
-  'https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif',
+import React, { useRef, useEffect, useState } from 'react';
+
+const skills = [
+  {
+    name: 'Product Building',
+    desc: 'End-to-end platform development from zero to production — owning product architecture, design, and GTM strategy.',
+  },
+  {
+    name: 'Growth & Marketing',
+    desc: 'Data-driven growth campaigns, social media strategy, cold outreach, and engagement optimization.',
+  },
+  {
+    name: 'Data Science & Analytics',
+    desc: 'Analytical insights, KPI tracking, algorithmic optimization, and data-driven decision systems.',
+  },
+  {
+    name: 'Brand & GTM Strategy',
+    desc: 'Crafting cohesive go-to-market strategies — from positioning to execution — that communicate a clear presence.',
+  },
+  {
+    name: 'Startup Operations',
+    desc: 'Cross-functional delivery coordination, community programs, cohort management, and milestone shipping.',
+  },
 ];
 
-const GIFS_ROW2 = [
-  'https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif',
-  'https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif',
-  'https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif',
-  'https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif',
-  'https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif',
-  'https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif',
-  'https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif',
-  'https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif',
-  'https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif',
-  'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif',
-];
+// Duplicate skills to create a seamless loop
+const row1 = [...skills, ...skills, ...skills, ...skills];
+const row2 = [...skills.slice().reverse(), ...skills.slice().reverse(), ...skills.slice().reverse(), ...skills.slice().reverse()];
 
-// Triple each row for seamless scroll
-const row1 = [...GIFS_ROW1, ...GIFS_ROW1, ...GIFS_ROW1];
-const row2 = [...GIFS_ROW2, ...GIFS_ROW2, ...GIFS_ROW2];
+const MacCard = ({ skill }: { skill: typeof skills[0] }) => (
+  <div className="rounded-2xl flex-shrink-0 flex flex-col border border-white/10 overflow-hidden shadow-2xl"
+       style={{ width: '420px', height: '270px', backgroundColor: '#111111' }}>
+    {/* Mac Window Header */}
+    <div className="h-12 flex items-center px-5 border-b border-white/10 gap-2" style={{ backgroundColor: '#1A1A1A' }}>
+      <div className="w-3.5 h-3.5 rounded-full bg-[#FF5F56]"></div>
+      <div className="w-3.5 h-3.5 rounded-full bg-[#FFBD2E]"></div>
+      <div className="w-3.5 h-3.5 rounded-full bg-[#27C93F]"></div>
+    </div>
+    {/* Content */}
+    <div className="p-8 flex flex-col justify-center flex-grow">
+      <h3 className="font-bold text-[#D7E2EA] mb-4 uppercase tracking-wide" style={{ fontSize: '1.4rem' }}>
+        {skill.name}
+      </h3>
+      <p className="text-[#D7E2EA]/60 font-light leading-relaxed text-[1.1rem]">
+        {skill.desc}
+      </p>
+    </div>
+  </div>
+);
 
 const MarqueeSection: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -55,44 +74,30 @@ const MarqueeSection: React.FC = () => {
       className="w-full overflow-hidden pt-24 sm:pt-32 md:pt-40 pb-10"
       style={{ backgroundColor: '#0C0C0C' }}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {/* Row 1 — moves RIGHT */}
         <div
-          className="flex gap-3"
+          className="flex gap-6"
           style={{
-            transform: `translateX(${offset - 200}px)`,
+            transform: `translateX(${offset - 400}px)`,
             willChange: 'transform',
           }}
         >
-          {row1.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt=""
-              loading="lazy"
-              className="rounded-2xl object-cover flex-shrink-0"
-              style={{ width: '420px', height: '270px' }}
-            />
+          {row1.map((skill, i) => (
+            <MacCard key={i} skill={skill} />
           ))}
         </div>
 
         {/* Row 2 — moves LEFT */}
         <div
-          className="flex gap-3"
+          className="flex gap-6"
           style={{
-            transform: `translateX(${-(offset - 200)}px)`,
+            transform: `translateX(${-(offset - 100)}px)`,
             willChange: 'transform',
           }}
         >
-          {row2.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt=""
-              loading="lazy"
-              className="rounded-2xl object-cover flex-shrink-0"
-              style={{ width: '420px', height: '270px' }}
-            />
+          {row2.map((skill, i) => (
+            <MacCard key={i} skill={skill} />
           ))}
         </div>
       </div>
